@@ -1,10 +1,9 @@
-// import { Application } from './application.js'
-import { LinkScraper } from './link-scraper.js'
+import { Application } from './application.js'
 
 try {
-  const linkTest = new LinkScraper()
-  const test = await linkTest.getLinks('https://courselab.lnu.se/scraper-site-1')
-  console.log(test)
+  const [,, url] = process.argv
+  const application = new Application(url)
+  await application.run()
 } catch (error) {
   console.error(error.message)
 }
