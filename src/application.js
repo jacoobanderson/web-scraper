@@ -1,4 +1,5 @@
 import { LinkScraper } from './link-scraper.js'
+import { CalendarChecker } from './calendar-check.js'
 
 export class Application {
     #url
@@ -9,13 +10,23 @@ export class Application {
 
     async #linkScraper () {
         const linkScrape = new LinkScraper()
-        const scrapedLinks = await linkScrape.getLinks(this.#url)
-        return scrapedLinks
+        await linkScrape.getLinks(this.#url)
+        console.log('Scraping links...OK')
+    }
+
+    async #calendarChecker () {
+        const linkScrape = new LinkScraper()
+        const calendar = await linkScrape.getLinks(this.#url)
+
+        const calendarCheck = new CalendarChecker()
+        await calendarCheck.getFreeDays(calendar[0])
+
+        console.log('Scraping available days...OK')
     }
 
     async run () {
-        console.log(await this.#linkScraper())
+        await this.#linkScraper()
+        await this.#calendarChecker()
     }
-
 
 }
