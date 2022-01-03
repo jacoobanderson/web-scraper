@@ -21,7 +21,6 @@ export class ReservationChecker {
               redirect: 'manual'
         })
         this.#fetchCookie = response.headers.get('set-cookie').split(';')[0]
-        console.log(await this.getRestaurantBookingData())
     }
 
     async getRestaurantBookingData () {
@@ -31,5 +30,22 @@ export class ReservationChecker {
             }
         })
         return response.text()
+    }
+
+    async getBookingAlternatives() {
+        await this.getCookieFromResponse()
+        const restaurantData = await this.getRestaurantBookingData()
+        
+        //Clean
+        const dom = new JSDOM(restaurantData)
+        const bookingTimes = Array.from(dom.window.document.querySelectorAll(`input[name="group1"][value^="${this.#day.slice(0, 3)}"] ~ span`))
+        .map(ele => ele.textContent.trim().split(' ')[0])
+        
+        const compiledTimes = {
+            day: `${this.#day}`,
+            available: bookingTimes
+        }
+        
+        console.log(compiledTimes)
     }
 }

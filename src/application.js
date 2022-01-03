@@ -52,7 +52,7 @@ export class Application {
 
         for (let i = 0; i < this.#availableDays.length; i++) {
             const reservationCheck = new ReservationChecker(bar, this.#availableDays[i])
-            await reservationCheck.getCookieFromResponse(bar, this.#availableDays[i])
+            await reservationCheck.getBookingAlternatives()
         }
     }
 
