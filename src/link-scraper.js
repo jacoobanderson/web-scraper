@@ -4,7 +4,7 @@ import { JSDOM } from 'jsdom'
 export class LinkScraper {
     async getLinks (url) {
         // Gets the initial raw data from the chosen URL.
-        const initialData = await this.#getInitialData(url)
+        const initialData = await this.getInitialData(url)
 
         const dom = new JSDOM(initialData)
 
@@ -14,7 +14,7 @@ export class LinkScraper {
         return linkScrape
     }
 
-    async #getInitialData (url) {
+    async getInitialData (url) {
         const response = await fetch(url)
         return response.text()
       }

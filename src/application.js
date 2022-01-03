@@ -16,10 +16,11 @@ export class Application {
 
     async #calendarChecker () {
         const linkScrape = new LinkScraper()
-        const calendar = await linkScrape.getLinks(this.#url)
+        const links = await linkScrape.getLinks(this.#url)
+        const calendar = links[0]
 
         const calendarCheck = new CalendarChecker()
-        await calendarCheck.getFreeDays(calendar[0])
+        await calendarCheck.getFreeDays(calendar)
 
         console.log('Scraping available days...OK')
     }
