@@ -3,9 +3,11 @@ import { LinkScraper } from './link-scraper.js'
 
 export class CalendarChecker {
 
+    // WRITE BETTER SOLUTION
     async getFreeDays (url) {
         const freeDays = []
         const countDays = {}
+        const availableDays = []
         const days = await this.#scrapeDays(url)
 
         for (let i = 0; i < days.length; i++) {
@@ -22,8 +24,16 @@ export class CalendarChecker {
         freeDays.forEach((x) => {
             countDays[x] = (countDays[x] || 0) + 1
         })
+
+        for (const key in countDays) {
+            if (countDays[key] === 3) {
+                availableDays.push(key)
+            }
+        }
         console.log(countDays)
         console.log(freeDays)
+        console.log(availableDays)
+        return availableDays
     }
 
     async #scrapeDays (url) {
