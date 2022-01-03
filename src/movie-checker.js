@@ -20,7 +20,6 @@ export class MovieChecker {
             
             const response = await fetch(`${this.#url}/check?day=${id}&movie=0${i + 1}`)
             movieInformation = await response.json()
-            
 
             for (let j = 0; j < movieInformation.length; j++) {
                 if (movieInformation[j].status === 1) {

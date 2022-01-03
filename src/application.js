@@ -10,10 +10,13 @@ export class Application {
 
     #availableDays
 
+    #reservationAlternatives
+
     constructor(url) {
         this.#url = url
         this.#movieInfo = []
         this.#availableDays = undefined
+        this.#reservationAlternatives = []
     }
 
     async #linkScraper () {
@@ -42,7 +45,6 @@ export class Application {
             const movieCheck = new MovieChecker(movies, this.#availableDays[i])
             this.#movieInfo.push(await movieCheck.getMovieInformation())
         }
-        console.log(this.#movieInfo)
     }
 
     async #reservationChecker () {
@@ -52,7 +54,7 @@ export class Application {
 
         for (let i = 0; i < this.#availableDays.length; i++) {
             const reservationCheck = new ReservationChecker(bar, this.#availableDays[i])
-            await reservationCheck.getBookingAlternatives()
+            this.#reservationAlternatives.push(await reservationCheck.getBookingAlternatives())
         }
     }
 
@@ -66,7 +68,34 @@ export class Application {
 
     #suggestions () {
         console.log('\nSuggestions\n===========')
-        console.log(this.#availableDays)
+        const availableDays = this.#availableDays
+        const movieInfo = this.#movieInfo.flat()
+        const reservation = this.#reservationAlternatives
+
+        for (const element of movieInfo) {
+            for (const ele of reservation) {
+                if (element.day === ele.day) {
+                    const movieStart = element.time.split(':')[0]
+                    
+                    const reservationStart = ele.available
+                    
+                    const reservStartFirstTwo = reservationStart.map(x => x.substring(0, 2))
+                    for (let i = 0; i < reservStartFirstTwo.length; i++) {
+
+                        // console.log(Number(movieStart) + 2)
+                        // console.log(Number(reservStartFirstTwo[i]))
+                        if (Number(movieStart) + 2 === Number(reservStartFirstTwo[i])) {
+                            console.log('works')
+                        }
+                    }
+                }
+            }
+        }
+
+          console.log(availableDays)
+          console.log(movieInfo)
+          console.log(reservation)
+
     }
 
 }

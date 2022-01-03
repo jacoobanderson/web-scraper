@@ -46,6 +46,6 @@ export class ReservationChecker {
             available: bookingTimes
         }
         
-        console.log(compiledTimes)
+        return compiledTimes
     }
 }
