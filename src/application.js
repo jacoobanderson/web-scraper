@@ -1,5 +1,6 @@
 import { LinkScraper } from './link-scraper.js'
 import { CalendarChecker } from './calendar-check.js'
+import { MovieChecker } from './movie-checker.js'
 
 export class Application {
     #url
@@ -32,7 +33,11 @@ export class Application {
         const linkScrape = new LinkScraper()
         const links = await linkScrape.getLinks(this.#url)
         const movies = links[1]
-        console.log(movies)
+
+        for (let i = 0; i < this.#availableDays.length; i++) {
+            const movieCheck = new MovieChecker(movies, this.#availableDays[i])
+            await movieCheck.getAvailable()
+        }
     }
 
     async run () {
