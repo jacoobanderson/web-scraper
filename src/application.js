@@ -36,7 +36,7 @@ export class Application {
 
         for (let i = 0; i < this.#availableDays.length; i++) {
             const movieCheck = new MovieChecker(movies, this.#availableDays[i])
-            await movieCheck.getAvailable()
+            await movieCheck.getMovieInformation()
         }
     }
 

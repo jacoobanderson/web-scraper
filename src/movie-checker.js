@@ -10,13 +10,30 @@ export class MovieChecker {
         this.#day = day
     }
 
-    async getAvailable () {
+    // Clean
+    async getMovieInformation () {
         const id = this.getDayId()
+        const compiledInfo = []
+        
+        let movieInformation
         for (let i = 0; i < 3; i++) {
-            console.log(`${this.#url}/check?day=${id}&movie=0${i + 1}`)
+            
             const response = await fetch(`${this.#url}/check?day=${id}&movie=0${i + 1}`)
-            console.log(await response.json())
+            movieInformation = await response.json()
+            
+
+            for (let j = 0; j < movieInformation.length; j++) {
+                if (movieInformation[j].status === 1) {
+                    const movieName = await this.getMovie(movieInformation[j].movie)
+                    compiledInfo.push({
+                        day: `${this.#day}`,
+                        time: `${movieInformation[j].time}`,
+                        title: `${movieName}`
+                    })
+                }
+            }
         }
+        console.log(compiledInfo)
     }
 
     // Clean
