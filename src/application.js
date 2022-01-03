@@ -45,6 +45,7 @@ export class Application {
             const movieCheck = new MovieChecker(movies, this.#availableDays[i])
             this.#movieInfo.push(await movieCheck.getMovieInformation())
         }
+        console.log('Scraping showtimes...OK')
     }
 
     async #reservationChecker () {
@@ -56,6 +57,7 @@ export class Application {
             const reservationCheck = new ReservationChecker(bar, this.#availableDays[i])
             this.#reservationAlternatives.push(await reservationCheck.getBookingAlternatives())
         }
+        console.log('Scraping possible reservations...OK')
     }
 
     async run () {
@@ -68,7 +70,6 @@ export class Application {
 
     #suggestions () {
         console.log('\nSuggestions\n===========')
-        const availableDays = this.#availableDays
         const movieInfo = this.#movieInfo.flat()
         const reservation = this.#reservationAlternatives
 
@@ -82,20 +83,16 @@ export class Application {
                     const reservStartFirstTwo = reservationStart.map(x => x.substring(0, 2))
                     for (let i = 0; i < reservStartFirstTwo.length; i++) {
 
-                        // console.log(Number(movieStart) + 2)
-                        // console.log(Number(reservStartFirstTwo[i]))
                         if (Number(movieStart) + 2 === Number(reservStartFirstTwo[i])) {
-                            console.log('works')
+                            this.#print(element.day, element.title, element.time, ele.available[i])
                         }
                     }
                 }
             }
         }
-
-          console.log(availableDays)
-          console.log(movieInfo)
-          console.log(reservation)
-
     }
 
+    #print (day, name, movieTime, restaurantTime) {
+        console.log(`On ${day.charAt(0).toUpperCase() + day.slice(1)}, "${name}" begins at ${movieTime}, and there is a free table to book between ${restaurantTime}.`)
+    }
 }
