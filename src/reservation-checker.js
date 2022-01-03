@@ -21,7 +21,7 @@ export class ReservationChecker {
               redirect: 'manual'
         })
         this.#fetchCookie = response.headers.get('set-cookie').split(';')[0]
-        this.getRestaurantBookingData()
+        console.log(await this.getRestaurantBookingData())
     }
 
     async getRestaurantBookingData () {
@@ -30,6 +30,6 @@ export class ReservationChecker {
                 cookie: `${this.#fetchCookie}`
             }
         })
-        console.log(response)
+        return response.text()
     }
 }
