@@ -4,8 +4,11 @@ import { CalendarChecker } from './calendar-check.js'
 export class Application {
     #url
 
+    #availableDays
+
     constructor(url) {
         this.#url = url
+        this.#availableDays = undefined
     }
 
     async #linkScraper () {
@@ -20,14 +23,28 @@ export class Application {
         const calendar = links[0]
 
         const calendarCheck = new CalendarChecker()
-        await calendarCheck.getFreeDays(calendar)
+        this.#availableDays = await calendarCheck.getFreeDays(calendar)
 
         console.log('Scraping available days...OK')
+    }
+
+    async #movieChecker () {
+        const linkScrape = new LinkScraper()
+        const links = await linkScrape.getLinks(this.#url)
+        const movies = links[1]
+        console.log(movies)
     }
 
     async run () {
         await this.#linkScraper()
         await this.#calendarChecker()
+        await this.#movieChecker()
+        this.#suggestions()
+    }
+
+    #suggestions () {
+        console.log('\nSuggestions\n===========')
+        console.log(this.#availableDays)
     }
 
 }
