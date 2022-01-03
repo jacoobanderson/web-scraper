@@ -1,6 +1,7 @@
 import { LinkScraper } from './link-scraper.js'
 import { CalendarChecker } from './calendar-check.js'
 import { MovieChecker } from './movie-checker.js'
+import { ReservationChecker } from './reservation-checker.js'
 
 export class Application {
     #url
@@ -45,13 +46,21 @@ export class Application {
     }
 
     async #reservationChecker () {
-        
+        const linkScrape = new LinkScraper()
+        const links = await linkScrape.getLinks(this.#url)
+        const bar = links[2]
+
+        for (let i = 0; i < this.#availableDays.length; i++) {
+            const reservationCheck = new ReservationChecker(bar, this.#availableDays[i])
+            await reservationCheck.getCookieFromResponse(bar, this.#availableDays[i])
+        }
     }
 
     async run () {
         await this.#linkScraper()
         await this.#calendarChecker()
         await this.#movieChecker()
+        await this.#reservationChecker()
         this.#suggestions()
     }
 
