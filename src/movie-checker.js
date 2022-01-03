@@ -33,7 +33,7 @@ export class MovieChecker {
                 }
             }
         }
-        console.log(compiledInfo)
+        return compiledInfo
     }
 
     // Clean

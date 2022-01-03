@@ -5,10 +5,13 @@ import { MovieChecker } from './movie-checker.js'
 export class Application {
     #url
 
+    #movieInfo
+
     #availableDays
 
     constructor(url) {
         this.#url = url
+        this.#movieInfo = []
         this.#availableDays = undefined
     }
 
@@ -36,8 +39,13 @@ export class Application {
 
         for (let i = 0; i < this.#availableDays.length; i++) {
             const movieCheck = new MovieChecker(movies, this.#availableDays[i])
-            await movieCheck.getMovieInformation()
+            this.#movieInfo.push(await movieCheck.getMovieInformation())
         }
+        console.log(this.#movieInfo)
+    }
+
+    async #reservationChecker () {
+        
     }
 
     async run () {
