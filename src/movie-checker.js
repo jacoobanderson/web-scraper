@@ -13,7 +13,7 @@ export class MovieChecker {
     }
 
     async getMovieInformation () {
-        const id = this.getDayId()
+        const id = this.#getDayId()
         const compiledInfo = []
         let movieInformation
 
@@ -23,7 +23,7 @@ export class MovieChecker {
 
             for (let j = 0; j < movieInformation.length; j++) {
                 if (movieInformation[j].status === 1) {
-                    const movieName = await this.getMovie(movieInformation[j].movie)
+                    const movieName = await this.#getMovie(movieInformation[j].movie)
                     compiledInfo.push({
                         day: `${this.#day}`,
                         time: `${movieInformation[j].time}`,
@@ -36,7 +36,7 @@ export class MovieChecker {
     }
 
     // Clean
-    async getMovie (movieId) {
+    async #getMovie (movieId) {
         const linkScraper = new LinkScraper()
         const data = await linkScraper.getInitialData(this.#url)
 
@@ -46,7 +46,7 @@ export class MovieChecker {
         return movieScrape[0].textContent
     }
 
-    getDayId () {
+    #getDayId () {
         let id
 
         switch (this.#day) {

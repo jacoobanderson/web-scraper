@@ -82,7 +82,6 @@ export class Application {
                     
                     const reservStartFirstTwo = reservationStart.map(x => x.substring(0, 2))
                     for (let i = 0; i < reservStartFirstTwo.length; i++) {
-
                         if (Number(movieStart) + 2 === Number(reservStartFirstTwo[i])) {
                             this.#print(element.day, element.title, element.time, ele.available[i])
                         }

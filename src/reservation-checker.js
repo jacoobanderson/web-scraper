@@ -11,7 +11,7 @@ export class ReservationChecker {
         this.#fetchCookie = undefined
     }
 
-    async getCookieFromResponse () {
+    async #getCookieFromResponse () {
         const response = await fetch(`${this.#url}login`, {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
@@ -23,7 +23,7 @@ export class ReservationChecker {
         this.#fetchCookie = response.headers.get('set-cookie').split(';')[0]
     }
 
-    async getRestaurantBookingData () {
+    async #getRestaurantBookingData () {
         const response = await fetch(`${this.#url}login/booking`, {
             headers: {
                 cookie: `${this.#fetchCookie}`
@@ -33,10 +33,9 @@ export class ReservationChecker {
     }
 
     async getBookingAlternatives() {
-        await this.getCookieFromResponse()
-        const restaurantData = await this.getRestaurantBookingData()
-        
-        //Clean
+        await this.#getCookieFromResponse()
+        const restaurantData = await this.#getRestaurantBookingData()
+
         const dom = new JSDOM(restaurantData)
         const bookingTimes = Array.from(dom.window.document.querySelectorAll(`input[name="group1"][value^="${this.#day.slice(0, 3)}"] ~ span`))
         .map(ele => ele.textContent.trim().split(' ')[0])

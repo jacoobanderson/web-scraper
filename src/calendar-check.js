@@ -2,8 +2,6 @@ import { JSDOM } from 'jsdom'
 import { LinkScraper } from './link-scraper.js'
 
 export class CalendarChecker {
-
-    // WRITE BETTER SOLUTION
     async getFreeDays (url) {
         const freeDays = []
         const countDays = {}
