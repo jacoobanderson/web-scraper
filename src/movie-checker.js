@@ -4,20 +4,20 @@ import { LinkScraper } from './link-scraper.js'
 
 export class MovieChecker {
     #url
+
     #day
+
     constructor(url, day) {
         this.#url = url
         this.#day = day
     }
 
-    // Clean
     async getMovieInformation () {
         const id = this.getDayId()
         const compiledInfo = []
-        
         let movieInformation
+
         for (let i = 0; i < 3; i++) {
-            
             const response = await fetch(`${this.#url}/check?day=${id}&movie=0${i + 1}`)
             movieInformation = await response.json()
 
@@ -46,15 +46,19 @@ export class MovieChecker {
         return movieScrape[0].textContent
     }
 
-    // Better way?
     getDayId () {
-        let id = ''
-        if (this.#day === 'friday') {
-            id = '05'
-        } else if (this.#day === 'saturday') {
-            id = '06'
-        } else if (this.#day === 'sunday') {
-            id = '07'
+        let id
+
+        switch (this.#day) {
+            case 'friday':
+                id = '05'
+                break
+            case 'saturday':
+                id = '06'
+                break
+            case 'sunday':
+                id = '07'
+                break
         }
         return id
     }

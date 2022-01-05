@@ -60,7 +60,7 @@ export class Application {
         console.log('Scraping possible reservations...OK')
     }
 
-    async run () {
+    async start () {
         await this.#linkScraper()
         await this.#calendarChecker()
         await this.#movieChecker()
@@ -93,6 +93,6 @@ export class Application {
     }
 
     #print (day, name, movieTime, restaurantTime) {
-        console.log(`On ${day.charAt(0).toUpperCase() + day.slice(1)}, "${name}" begins at ${movieTime}, and there is a free table to book between ${restaurantTime}.`)
+        console.log(`* On ${day.charAt(0).toUpperCase() + day.slice(1)}, "${name}" begins at ${movieTime}, and there is a free table to book between ${restaurantTime}.`)
     }
 }
