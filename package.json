@@ -1,0 +1,25 @@
+{
+  "name": "assignment-a2-the-gathering-web-scraper",
+  "version": "1.1.0",
+  "description": "1DV026 - Assignment A2 - The Gathering Web Scraper",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "contributors": [
+    "Jacob Andersson <ja224iy@student.lnu.se>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jsdom": "^19.0.0",
+    "node-fetch": "^3.1.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.4"
+  }
+}
